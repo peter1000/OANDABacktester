@@ -9,16 +9,6 @@ class TimeLord(object):
 		self.rate1 = Rate.Rate("EUR/USD", "time", "1", "2")
 		self.snapShots = []
 
-	def API_getRate(self, instrumentName):
-		#return self.snapShots[0].instruments['EUR/USD']
-		return 1.00
-
-	def API_buy(self, instrumentName, units):
-		return 1.00
-
-	def API_sell(self, instrument, units):
-		return 1.00
-
 
 	def readJSON(self):	
 
@@ -46,9 +36,6 @@ class TimeLord(object):
 
 	def mainLoop(self):
 		print "Entering Main Loop"
-
-		for i in range(10):
-			print self.API_getRate("EUR/USD")
 
 	def initialize(self):
 		self.readJSON()
