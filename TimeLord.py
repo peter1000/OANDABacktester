@@ -38,11 +38,11 @@ class TimeLord(object):
 
 
 	def getAlgorithm(self):
-		with open ("input.txt", "r") as inputFile:
-			algorithm = inputFile.read()
+		#with open ("input.txt", "r") as inputFile:
+		#	algorithm = inputFile.read()
 
-		#form = cgi.FieldStorage()
-		#algorithm = form["user-script"]
+		form = cgi.FieldStorage()
+		algorithm = form["user-script"]
 
 		print algorithm
 
@@ -50,8 +50,8 @@ class TimeLord(object):
 
 		print algorithm
 
-		with open ("input.py", "w") as outputFile:
-			outputFile.write(algorithm)
+		#with open ("input.py", "w") as outputFile:
+		#	outputFile.write(algorithm)
 			
 
 	def doRegex(self, algorithm):
