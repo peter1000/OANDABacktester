@@ -37,7 +37,36 @@ else:
 				</td>
 			</tr>
 		</table>
+			<br />
+			<div class="list-group">
+				<a href="#" class="list-group-item">
+					<h4 class="list-group-item-heading">getRate(instrument)</h4>
+					<p class="list-group-item-text">Returns the rate of the instrument depending on the side you want to buy/sell at.</p>
+					<p style="color: green;">Example: getRate(“AUD/CAD”)</p>
+				</a>
+				<a href="#" class="list-group-item">
+					<h4 class="list-group-item-heading">movingAverage10(instrument)</h4>
+					<p class="list-group-item-text">Returns the 10 day moving average of a specified instrument.</p>
+					<p style="color: green;">Example: movingAverage10(“EUR/USD”)</p>
+				</a>
+				<a href="#" class="list-group-item">
+					<h4 class="list-group-item-heading">movingAverage50(instrument)</h4>
+					<p class="list-group-item-text">Returns the 50 day moving average of a specified instrument.</p>
+					<p style="color: green;">Example: movingAverage50(“EUR/USD”)</p>
+				</a>
+				<a href="#" class="list-group-item">
+					<h4 class="list-group-item-heading">movingAverage100(instrument)</h4>
+					<p class="list-group-item-text">Returns the 100 day moving average of a specified instrument.</p>
+					<p style="color: green;">Example: movingAverage100(“AUD/CAD”)</p>
+				</a>
+				<a href="#" class="list-group-item">
+					<h4 class="list-group-item-heading">postTrade(instrumentName, units, side)</h4>
+					<p class="list-group-item-text">Post a trade of an instrument with units and side.</p>
+					<p style="color: green;">Example: postTrade(“EUR/USD”, 500, “sell”)</p>
+				</a>
+			</div>
 	</div>
+	
 
 	<div class="results">
 		<div class="well">
@@ -52,7 +81,7 @@ else:
 			</div>
 		</div>
 
-		<div class="progress">
+		<div class="progress" style="display:none">
 			<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
 				<span class="sr-only">40% Complete (success)</span>
 			</div>
