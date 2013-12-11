@@ -10,6 +10,7 @@ class API:
 		self.positions = {} # dictionary of a list of trades
 		self.pnl = 0
 		self.cash = 0
+		self.unrealized = 0
 		self.stats = []
 
 	def API_newSnapShot(self, snapShot):
@@ -21,6 +22,9 @@ class API:
 
 
 	def API_getRate(self, instrumentName):
+		return self.snapShots[-1].getRate(instrumentName).getMid()
+
+	def getRate_ABI(self, instrumentName):
 		return self.snapShots[-1].getRate(instrumentName)
 
 
@@ -76,7 +80,7 @@ class API:
 			movingAverage = 0
 			for x in range((len(self.snapShots) - interval), len(self.snapShots)):
 				i = x
-				movingAverage = (movingAverage + self.snapShots[i].getRate(instrumentName).getMid())
+				movingAverage = (movingAverage + self.snapShots[i].getRate(instrumentName))
 			return float(movingAverage)/interval
 
 	def API_movingAverage10(self, instrumentName):
@@ -90,7 +94,7 @@ class API:
 
 	def API_computeStats(self):
 		#self.stats[self.snapShots[-1].getDate()]=self.pnl
-		self.stats.append([self.snapShots[-1].getDate(), -1*self.pnl, self.cash])
+		self.stats.append([self.snapShots[-1].getDate(), -1*self.pnl, self.cash, self.unrealized, self.unrealized-self.pnl])
 
 	def API_outputStats(self):
 		with open('data.txt', 'w') as outfile:
@@ -113,7 +117,21 @@ class API:
 				elif side == "sell":
 					side = "buy"
 				self.API_postTrade(instrumentName, trade.units, side);
-				print "AFTERCLOSEPNL" + str(-1*self.pnl)
-				print "AFTERCLOSECASH" + str(self.cash)
-
-			print "wtf"
+		self.unrealized = 0
+				
+  	def API_unRealized(self, instrumentName):
+		if instrumentName in self.positions:
+			tradeObjects = self.positions[instrumentName]
+			totalUnits = 0
+			side = ""
+			i = len(tradeObjects)
+			while(i > 0):
+				i = i - 1
+				#totalUnits += trade.units
+				trade = tradeObjects[0]
+				side = trade.side
+				if side == "buy":
+					self.unrealized = self.unrealized + (trade.units*self.Rate(side, self.snapShots[-1].getRate(instrumentName))-(trade.price * trade.units))
+				elif side == "sell":
+					self.unrealized = self.unrealized - (trade.units*self.Rate(side, self.snapShots[-1].getRate(instrumentName)) -(trade.price * trade.units))
+		print "unrealized" + str(self.unrealized)
