@@ -74,27 +74,24 @@ class TimeLord(object):
 		for snap in self.snapShots:
 			self.API.API_newSnapShot(snap)
 
-			if i % 60 == 0:
-		#		self.API.API_postTrade('EUR/USD', 1, 'buy')
-				self.API.API_computeStats()
 			#print self.API.API_movingAverage10("EUR/USD")
 			#else:
-
 			if i == length-1:
-				1
+				self.API.API_closePositions('EUR/USD')
+				self.API.API_computeStats()
 			else:
-				self.API.API_unRealized('EUR/USD')
-				self.API.API_postTrade('EUR/USD', 100, 'buy')
-				print "CASH" + str(self.API.cash)
-				print "PNL" + str(self.API.pnl)
+				self.API.API_postTrade('EUR/USD', 1000, 'buy')
 			#self.API.API_postTrade('EUR/USD', 500, 'buy')
 			#self.API.API_postTrade('EUR/USD', 600, 'sell')
 			#execfile('input.py')
 			#self.API.API_postTrade('EUR/USD', 1000, 'sell')
+			print self.API.cash
+
+			if i % 60 == 0:
+		#		self.API.API_postTrade('EUR/USD', 1, 'buy')
+				self.API.API_computeStats()
 			i = i + 1
 
-		self.API.API_closePositions('EUR/USD')
-		self.API.API_computeStats()
 		self.API.API_outputStats()
 
 			#print self.API.pnl
@@ -105,11 +102,15 @@ class TimeLord(object):
 
 
 def main():
+	print "Content-type: text/html"
+	print
+	print "<title>Test CGI</title>"
+	print "<p>Hello World!</p>"
 	x = TimeLord()
-	#x.getAlgorithm()
+	x.getAlgorithm()
 
-	x.initialize()
-	x.mainLoop()
+	#x.initialize()
+	#x.mainLoop()
 
 if  __name__ =='__main__':main()
 
