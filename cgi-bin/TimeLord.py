@@ -106,12 +106,8 @@ def main():
 	print "<title>Test CGI</title>"
 	print "<p>Hello World!</p>"
 	x = TimeLord()
-<<<<<<< HEAD
-	#x.getAlgorithm()
-
-=======
 	x.getAlgorithm()
->>>>>>> 9e3bbb548a20d6d899009e313f75c91ae9501c9d
+
 	x.initialize()
 	x.mainLoop()
 
