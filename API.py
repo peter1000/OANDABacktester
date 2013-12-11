@@ -80,3 +80,18 @@ class API:
 		with open('data.txt', 'w') as outfile:
   			json.dump(self.stats, outfile)
 
+  	def API_closeTrade(self, instrumentName):
+		if instrumentName in self.positions:
+			tradeObject = self.positions[instrumentName]
+			totalUnits = 0
+			side = ""
+			for i in tradeObject:
+				totalUnits += i.units
+				side = i.side
+
+			if side == "buy":
+				side = "sell"
+			elif side == "sell":
+				side = "buy"
+
+			self.API_postTrade(instrumentName, totalUnits, side);
