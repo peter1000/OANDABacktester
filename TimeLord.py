@@ -1,4 +1,5 @@
 import sys
+import re
 sys.dont_write_bytecode = True
 
 from fxObjects import Rate
@@ -39,6 +40,19 @@ class TimeLord(object):
 		print "Json Loaded" 
 
 
+	def getAlgorithm(self):
+		with open ("input.txt", "r") as inputFile:
+			algorithm = inputFile.read()
+
+		algorithm = self.doRegex(algorithm)
+
+		with open ("input.py", "w") as outputFile:
+			outputFile.write(algorithm)
+			
+
+	def doRegex(self, algorithm):
+		return re.sub( r'(getRate|postTrade|movingAverage)', r'self.API.API_\1', algorithm) 
+
 	def getRate(instrumentName):
 		return self.API.API_getRate(instrumentName)
 
@@ -64,9 +78,10 @@ class TimeLord(object):
 
 
 def main():
-	 x = TimeLord()
-	 x.initialize()
-	 x.mainLoop()
+	x = TimeLord()
+	x.getAlgorithm()
+	x.initialize()
+	x.mainLoop()
 	
 if  __name__ =='__main__':main()
 
