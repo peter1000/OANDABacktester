@@ -33,15 +33,23 @@ class TimeLord(object):
 #			print s.date
 #			print s.instruments
 
-	print "Json Loaded" 
+		print "Json Loaded" 
+
+
+	def getRate(instrumentName):
+		return self.API.API_getRate(instrumentName)
 
 	def mainLoop(self):
 		print "Entering Main Loop"
 		for snap in self.snapShots:
 			self.API.API_newSnapShot(snap)
-			self.API.API_postTrade('EUR/USD', 500, 'buy')
-			self.API.API_postTrade('EUR/USD', 600, 'sell')
+			#self.API.API_postTrade('EUR/USD', 500, 'buy')
+			#self.API.API_postTrade('EUR/USD', 600, 'sell')
+			execfile('input.py')
 			print self.API.pnl
+			self.API.API_computeStats()
+
+		self.API.API_outputStats()
 			
 
 	def initialize(self):
