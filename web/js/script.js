@@ -7,7 +7,7 @@ function graphData() {
 		}
 		
 		// Create the chart
-		$('#container').highcharts('StockChart', {
+		$('#graph').highcharts('StockChart', {
 			rangeSelector: {
 				selected: 1
 			},
