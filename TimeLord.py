@@ -1,6 +1,7 @@
 from fxObjects import Rate
 from fxObjects import MarketSnapshot
 import json
+import API
 
 class TimeLord(object):
 
@@ -8,15 +9,15 @@ class TimeLord(object):
 		self.name = 0
 		self.rate1 = Rate.Rate("EUR/USD", "time", "1", "2")
 		self.snapShots = []
-
+		self.API = API.API()
 
 	def readJSON(self):	
 
 		print "Loading JSON" 
-		json_data = json.load(open('json_data.json'))
+		json_data = json.load(open('history/EUR_USD.json'))
 
-		instrumentName = json_data['instrument']
-		candles = json_data['candles']
+		instrumentName = "EUR/USD"
+		candles = json_data
 
 		for rate in candles:
 			# create snapshot
@@ -36,6 +37,12 @@ class TimeLord(object):
 
 	def mainLoop(self):
 		print "Entering Main Loop"
+		for snap in self.snapShots:
+			self.API.API_newSnapShot(snap)
+			self.API.API_postTrade('EUR/USD', 500, 'buy')
+			self.API.API_postTrade('EUR/USD', 600, 'sell')
+			print self.API.pnl
+			
 
 	def initialize(self):
 		self.readJSON()

@@ -10,5 +10,5 @@ class MarketSnapshot(object):
 	def addInstrument(self, name, rate):
 		self.instruments[name]=rate
 
-	def getRate(instrument):
+	def getRate(self, instrument):
 		return self.instruments[instrument]
