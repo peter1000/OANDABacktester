@@ -46,10 +46,20 @@ class API:
 		return 1.00
 
 	def API_movingAverage10(self, instrumentName):
-		return 1.0
+		return API_abstractmovingAverage(self, 10, instrumentName)
 
 	def API_movingAverage50(self, instrumentName):
-		return 1.0
+		return API_abstractmovingAverage(self, 50, instrumentName)
 
 	def API_movingAverage100(self, instrumentName):
-		return 1.0
+		return API_abstractmovingAverage(self, 100, instrumentName)
+
+	def API_abstractMovingAverage(self, interval, instrumentName):
+		if interval > len(self.snapShots):
+			self.API_abstractmovingAverage(self, len(self.snapShots), instrumentName)
+		else:
+			movingAverage = 0
+			for x in range(interval, (len(self.snapShots) - interval)):
+				i = -1*x
+				movingAverage = movingAverage + self.snapShots[i]
+			return float(movingAverage)/interval
