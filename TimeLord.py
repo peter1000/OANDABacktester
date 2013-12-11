@@ -37,11 +37,21 @@ class TimeLord(object):
 
 	def mainLoop(self):
 		print "Entering Main Loop"
+		i = 0
+		length = len(self.snapShots)
+		#print length
 		for snap in self.snapShots:
 			self.API.API_newSnapShot(snap)
-			self.API.API_postTrade('EUR/USD', 500, 'buy')
-			self.API.API_postTrade('EUR/USD', 600, 'sell')
+			print self.API.API_movingAverage10("EUR/USD")
+			self.API.API_postTrade('EUR/USD', 1, 'buy')
+			#else:
+			if i == length-1:
+				self.API.API_postTrade('EUR/USD', 5000, 'sell')
+
 			print self.API.pnl
+			
+			i = i + 1
+			#print self.API.pnl
 			
 
 	def initialize(self):

@@ -8,7 +8,7 @@ import pickle
 params = {}
 
 params['instrument'] = 'EUR_USD'
-params['count'] = '3'
+params['count'] = '5000'
 params['start'] = '2013-04-03T18%3A30%3A30Z'
 #params['side'] = 'buy'
 #params['type'] = 'marketIfTouched'
@@ -21,7 +21,7 @@ response = urllib2.urlopen("http://api-sandbox.oanda.com/v1/history?instrument="
 data = json.load(response)['candles']
 date = datetime.strptime(data[-1:][0]['time'], '%Y-%m-%dT%H:%M:%SZ') 
 outfile = open(params['instrument']+'.json', 'w')
-while(date < (datetime.now()-timedelta(days=300))):
+while(date < (datetime.now()-timedelta(days=1))):
 	date = datetime.strptime(data[-1:][0]['time'], '%Y-%m-%dT%H:%M:%SZ') + timedelta(days=1)
 	params['start'] = str(date.isoformat('T')+'Z').replace(':','%3A') 
 	response = urllib2.urlopen("http://api-sandbox.oanda.com/v1/history?instrument="+params['instrument']+"&start="+params['start']+"&count="+params['count']+"&granularity=D")
