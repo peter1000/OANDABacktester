@@ -85,7 +85,7 @@ class API:
 
 	def API_outputStats(self):
 		with open('data.txt', 'w') as outfile:
-  			json.dump(self.stats, outfile)
+  			json.dump({"data":self.stats}, outfile)
 
   	def API_closeTrade(self, instrumentName):
 		if instrumentName in self.positions:
