@@ -9,7 +9,11 @@ class API:
 		self.stats = []
 
 	def API_newSnapShot(self, snapShot):
+
 		self.snapShots.append(snapShot)
+
+		if len(self.snapShots) > 500:
+			self.snapShots.pop(0)
 
 
 	def API_getRate(self, instrumentName):
