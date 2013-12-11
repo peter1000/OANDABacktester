@@ -26,9 +26,9 @@ class API:
 
 	def Rate(self, side, rate):
 		if side == 'buy':
-			return rate.getBid()
-		else:
 			return rate.getAsk()
+		else:
+			return rate.getBid()
 
 	def API_postTrade(self, instrumentName, units, side):
 		curRate = self.Rate(side, self.snapShots[-1].getRate(instrumentName))
@@ -90,7 +90,7 @@ class API:
 
 	def API_computeStats(self):
 		#self.stats[self.snapShots[-1].getDate()]=self.pnl
-		self.stats.append([self.snapShots[-1].getDate(), self.pnl, self.cash])
+		self.stats.append([self.snapShots[-1].getDate(), -1*self.pnl, self.cash])
 
 	def API_outputStats(self):
 		with open('data.txt', 'w') as outfile:
@@ -113,5 +113,7 @@ class API:
 				elif side == "sell":
 					side = "buy"
 				self.API_postTrade(instrumentName, trade.units, side);
+				print "AFTERCLOSEPNL" + str(-1*self.pnl)
+				print "AFTERCLOSECASH" + str(self.cash)
 
 			print "wtf"

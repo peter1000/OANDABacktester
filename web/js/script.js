@@ -47,8 +47,8 @@ function graphData() {
 }
 
 function sendUserScript() {
-	var url = "whatever_they_have_in_the_backend.py";
-	var params = "user-script=" + document.getElementById('user-script').value; //get the user's input script text
+	var url = "/TimeLord.py";
+	var params = "user-script=" + window.editor.getValue(); //get the user's input script text
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
 
