@@ -15,4 +15,10 @@ class Rate(object):
 		return self.time
 		
 	def getAsk(self):
-		return self.ask
+		return self.ask		
+		
+	def getBid(self):
+		return self.bid
+
+	def getAvg(self):
+		return (self.bid + self.ask) / 2
