@@ -1,10 +1,12 @@
 from fxObjects import Trade
+import json
 class API:
 
 	def __init__(self):
 		self.snapShots = []
 		self.positions = {} # dictionary of a list of trades
 		self.pnl = 0
+		self.stats = []
 
 	def API_newSnapShot(self, snapShot):
 		self.snapShots.append(snapShot)
@@ -69,3 +71,12 @@ class API:
 
 	def API_movingAverage100(self, instrumentName):
 		return self.API_abstractMovingAverage(100, instrumentName)
+
+	def API_computeStats(self):
+		#self.stats[self.snapShots[-1].getDate()]=self.pnl
+		self.stats.append([self.snapShots[-1].getDate(), self.pnl])
+
+	def API_outputStats(self):
+		with open('data.txt', 'w') as outfile:
+  			json.dump(self.stats, outfile)
+

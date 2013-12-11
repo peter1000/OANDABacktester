@@ -12,3 +12,6 @@ class MarketSnapshot(object):
 
 	def getRate(self, instrument):
 		return self.instruments[instrument]
+
+	def getDate(self):
+		return self.date

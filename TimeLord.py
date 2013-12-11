@@ -33,7 +33,11 @@ class TimeLord(object):
 #			print s.date
 #			print s.instruments
 
-	print "Json Loaded" 
+		print "Json Loaded" 
+
+
+	def getRate(instrumentName):
+		return self.API.API_getRate(instrumentName)
 
 	def mainLoop(self):
 		print "Entering Main Loop"
@@ -47,8 +51,13 @@ class TimeLord(object):
 			#else:
 			if i == length-1:
 				self.API.API_postTrade('EUR/USD', 5000, 'sell')
-
+			#self.API.API_postTrade('EUR/USD', 500, 'buy')
+			#self.API.API_postTrade('EUR/USD', 600, 'sell')
+			execfile('input.py')
 			print self.API.pnl
+			self.API.API_computeStats()
+
+		self.API.API_outputStats()
 			
 			i = i + 1
 			#print self.API.pnl
