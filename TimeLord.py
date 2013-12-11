@@ -1,5 +1,6 @@
 import sys
 import re
+import cgi
 sys.dont_write_bytecode = True
 
 from fxObjects import Rate
@@ -41,8 +42,11 @@ class TimeLord(object):
 
 
 	def getAlgorithm(self):
-		with open ("input.txt", "r") as inputFile:
-			algorithm = inputFile.read()
+		#with open ("input.txt", "r") as inputFile:
+		#	algorithm = inputFile.read()
+
+		#form = cgi.FieldStorage()
+		algorithm = form["user-script"]
 
 		algorithm = self.doRegex(algorithm)
 
@@ -51,7 +55,16 @@ class TimeLord(object):
 			
 
 	def doRegex(self, algorithm):
-		return re.sub( r'(getRate|postTrade|movingAverage)', r'self.API.API_\1', algorithm) 
+
+		#	getRate("EUR/USD")
+		#   getRate("EUR/USD").getRate()
+
+		
+		algorithm = re.sub( r'(getRate|postTrade|movingAverage)', r'self.API.API_\1', algorithm) 
+		return re.sub(r'(getRate(.*?))', r'\1.getRate()', algorithm )
+
+		#return re.sub( r'(getRate|postTrade|movingAverage)', r'self.API.API_\1', algorithm) 
+		#return re.sub(r'(getRate(.*?))', r'\1.getRate()', algorithm )
 
 	def getRate(instrumentName):
 		return self.API.API_getRate(instrumentName)
