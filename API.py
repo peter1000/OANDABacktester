@@ -22,6 +22,9 @@ class API:
 
 
 	def API_getRate(self, instrumentName):
+		return self.snapShots[-1].getRate(instrumentName).getMid()
+
+	def API_getRate_ABI(self, instrumentName):
 		return self.snapShots[-1].getRate(instrumentName)
 
 
@@ -32,7 +35,7 @@ class API:
 			return rate.getBid()
 
 	def API_postTrade(self, instrumentName, units, side):
-		curRate = self.Rate(side, self.snapShots[-1].getRate(instrumentName))
+		curRate = self.Rate(side, self.snapShots[-1].getRate_ABI(instrumentName))
 		if instrumentName in self.positions: #if there is a trade existing
 			curposition = self.positions[instrumentName]
 			if curposition[0].side != side: #if the side we are trading does not match the side of the trade that exists
@@ -40,16 +43,16 @@ class API:
 				if diffUnits > 0:
 					curposition[0].units = diffUnits
 					self.pnl += units * (curposition[0].price - curRate)
-					self.cash += units*self.Rate(side, self.snapShots[-1].getRate(instrumentName))
+					self.cash += units*self.Rate(side, self.snapShots[-1].getRate_ABI(instrumentName))
 				elif diffUnits == 0:
 					self.pnl += units * (curposition[0].price - curRate)
-					self.cash += units*self.Rate(side, self.snapShots[-1].getRate(instrumentName))
+					self.cash += units*self.Rate(side, self.snapShots[-1].getRate_ABI(instrumentName))
 					curposition.pop(0)
 					if len(curposition) == 0:
 						del self.positions[instrumentName]
 				else:
 					self.pnl += curposition[0].units * (curposition[0].price - curRate)
-					self.cash += units * self.Rate(side, self.snapShots[-1].getRate(instrumentName))
+					self.cash += units * self.Rate(side, self.snapShots[-1].getRate_ABI(instrumentName))
 					curposition.pop(0)
 					if len(curposition) == 0:
 						del self.positions[instrumentName]
@@ -77,7 +80,7 @@ class API:
 			movingAverage = 0
 			for x in range((len(self.snapShots) - interval), len(self.snapShots)):
 				i = x
-				movingAverage = (movingAverage + self.snapShots[i].getRate(instrumentName).getMid())
+				movingAverage = (movingAverage + self.snapShots[i].getRate(instrumentName))
 			return float(movingAverage)/interval
 
 	def API_movingAverage10(self, instrumentName):

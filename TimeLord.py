@@ -34,29 +34,24 @@ class TimeLord(object):
 			# add snapshot to snaplist list
 			self.snapShots.append(snap)
 
-#		for s in self.snapShots :
-#			print s.date
-#			print s.instruments
-
 		print "Json Loaded"
 
 
 	def getAlgorithm(self):
-		#with open ("input.txt", "r") as inputFile:
-		#	algorithm = inputFile.read()
+		with open ("input.txt", "r") as inputFile:
+			algorithm = inputFile.read()
 
-		form = cgi.FieldStorage()
-		algorithm = form["user-script"]
+		#form = cgi.FieldStorage()
+		#algorithm = form["user-script"]
+
 		print algorithm
 
 		algorithm = self.doRegex(algorithm)
 
 		print algorithm
 
-		return
-
-		#with open ("input.py", "w") as outputFile:
-		#	outputFile.write(algorithm)
+		with open ("input.py", "w") as outputFile:
+			outputFile.write(algorithm)
 			
 
 	def doRegex(self, algorithm):
@@ -65,14 +60,10 @@ class TimeLord(object):
 		#   getRate("EUR/USD").getRate()
 
 		
-		algorithm = re.sub( r'(getRate|postTrade|movingAverage)', r'self.API.API_\1', algorithm) 
-		return re.sub(r'(getRate(.*?))', r'\1.getRate()', algorithm )
+		return re.sub( r'(getRate|postTrade|movingAverage)', r'self.API.API_\1', algorithm)
 
 		#return re.sub( r'(getRate|postTrade|movingAverage)', r'self.API.API_\1', algorithm) 
 		#return re.sub(r'(getRate(.*?))', r'\1.getRate()', algorithm )
-
-	def getRate(instrumentName):
-		return self.API.API_getRate(instrumentName)
 
 	def mainLoop(self):
 		print "Entering Main Loop"
