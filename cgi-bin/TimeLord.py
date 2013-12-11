@@ -19,7 +19,7 @@ class TimeLord(object):
 	def readJSON(self):
 
 		print "Loading JSON"
-		json_data = json.load(open('history/EUR_USD.json'))
+		json_data = json.load(open('cgi-bin/history/EUR_USD.json'))
 
 		instrumentName = "EUR/USD"
 		candles = json_data
@@ -44,11 +44,11 @@ class TimeLord(object):
 		#print "in getAlgorithm"
 		form = cgi.FieldStorage()
 		algorithm = form.getvalue("user-script");
-		print algorithm
+		#print algorithm
 		algorithm = self.doRegex(algorithm)
-		print algorithm
+		#print algorithm
 
-		with open ("input.py", "w") as outputFile:
+		with open ("cgi-bin/input.py", "w") as outputFile:
 			outputFile.write(algorithm)
 			
 
@@ -104,7 +104,6 @@ def main():
 	print "Content-type: text/html"
 	print
 	print "<title>Test CGI</title>"
-	print "<p>Hello World!</p>"
 	x = TimeLord()
 	x.getAlgorithm()
 

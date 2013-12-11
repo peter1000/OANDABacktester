@@ -16,7 +16,7 @@ function graphData() {
 			},
 			yAxis: {
 				title: {
-					text: '% Gained/Lost'
+					text: 'P/L'
 				},
 			},
 			xAxis: {
@@ -47,8 +47,9 @@ function graphData() {
 }
 
 function sendUserScript() {
+	$(".user-input td div.alert-success").hide();
 	$.get("/cgi-bin/TimeLord.py?user-script=" + encodeURIComponent(window.editor.getValue()), function (data) {
-		alert("Load was performed and got: " + data);
 		graphData();
+		$(".user-input td div.alert-success").show();
 	});
 }
