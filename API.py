@@ -10,6 +10,7 @@ class API:
 		self.positions = {} # dictionary of a list of trades
 		self.pnl = 0
 		self.cash = 0
+		self.unrealized = 0
 		self.stats = []
 
 	def API_newSnapShot(self, snapShot):
@@ -113,7 +114,22 @@ class API:
 				elif side == "sell":
 					side = "buy"
 				self.API_postTrade(instrumentName, trade.units, side);
-				print "AFTERCLOSEPNL" + str(-1*self.pnl)
-				print "AFTERCLOSECASH" + str(self.cash)
-
-			print "wtf"
+				
+  	def API_unRealized(self, instrumentName):
+		print "unrealized positions"
+		if instrumentName in self.positions:
+			tradeObjects = self.positions[instrumentName]
+			totalUnits = 0
+			side = ""
+			i = len(tradeObjects)
+			while(i > 0):
+				i = i - 1
+				#totalUnits += trade.units
+				trade = tradeObjects[0]
+				side = trade.side
+				if side == "buy":
+					side = "sell"
+				elif side == "sell":
+					side = "buy"
+				unrealized = trade.price * units
+			print unrealized
