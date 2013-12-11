@@ -44,6 +44,7 @@ table {
 }
 
 .user-input td div.alert-success {
+	display: none;
 	height: 45px;
 	margin-bottom: 0;
 }
