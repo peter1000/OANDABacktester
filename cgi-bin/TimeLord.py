@@ -20,7 +20,7 @@ class TimeLord(object):
 
 		print "Loading JSON"
 		json_data = json.load(open('cgi-bin/history/EUR_USD.json'))
-
+		print "got JSON data"
 		instrumentName = "EUR/USD"
 		candles = json_data
 
@@ -77,6 +77,7 @@ class TimeLord(object):
 				self.API.API_closePositions('EUR/USD')
 				self.API.API_computeStats()
 			else:
+				#execfunc('cgi-bin/input.py')
 				if self.API.API_movingAverage10("EUR/USD") < self.API.API_getRate("EUR/USD"):
 					self.API.API_postTrade('EUR/USD', 500, 'buy')
 				else:

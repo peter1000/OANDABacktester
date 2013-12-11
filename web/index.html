@@ -10,22 +10,12 @@
 
 <body class="">
 	<div class="page-header">
-		<h1>Fxtrade Back Testing App</h1>
+		<h1>fxTrade Back Testing App</h1>
 	</div>
 
 	<div class="user-input">
 		<div class="well">
-			<textarea id="code" name="code">
-if movingAverage10("EUR/USD") < getRate("EUR/USD"):
-	postTrade('EUR/USD', 500, 'buy')
-else:
-	postTrade('EUR/USD', 500, 'sell')
-
-if movingAverage50("EUR/USD") > getRate("EUR/USD"):
-	postTrade('EUR/USD', 500, 'buy')
-else:
-	postTrade('EUR/USD', 500, 'sell')
-			</textarea>
+			<textarea id="code" name="code"></textarea>
 		</div>
 		<table>
 			<tr>

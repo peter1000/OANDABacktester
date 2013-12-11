@@ -31,7 +31,7 @@ function graphData() {
 				}
 			},
 			series: [{
-				name: 'AAPL Stock Price',
+				name: 'Your P/L',
 				data: data,
 				marker: {
 					enabled: true,
@@ -47,9 +47,9 @@ function graphData() {
 }
 
 function sendUserScript() {
-	$(".user-input td div.alert-success").hide();
+	$(".user-input td div.alert-success").show();
 	$.get("/cgi-bin/TimeLord.py?user-script=" + encodeURIComponent(window.editor.getValue()), function (data) {
+		console.log(data);
 		graphData();
-		$(".user-input td div.alert-success").show();
 	});
 }
