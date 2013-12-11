@@ -49,26 +49,6 @@ function graphData() {
 function sendUserScript() {
 	$.get("/cgi-bin/TimeLord.py?user-script=" + encodeURIComponent(window.editor.getValue()), function (data) {
 		alert("Load was performed and got: " + data);
+		graphData();
 	});
-	return;
-	var params = "user-script=" + window.editor.getValue(); //get the user's input script text
-	var xhr = new XMLHttpRequest();
-	xhr.open("POST", "/cgi-bin/index.cgi", true);
-
-	//Send the proper header information along with the request
-	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhr.setRequestHeader("Content-length", params.length);
-	xhr.setRequestHeader("Connection", "close");
-	xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-	xhr.setRequestHeader("Access-Control-Allow-Methods", "*");
-	xhr.setRequestHeader("Access-Control-Allow-Headers", "*");
-
-	xhr.onreadystatechange = function() { //Call a function when the state changes.
-		if (xhr.readyState == 4 && xhr.status == 200) {
-			//Once the back end script finishes, we expect output.json to exist, so call graphData()
-			alert(xhr.responseText);
-			graphData();
-		}
-	};
-	xhr.send(params);
 }
