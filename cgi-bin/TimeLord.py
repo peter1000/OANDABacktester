@@ -80,13 +80,15 @@ class TimeLord(object):
 				self.API.API_closePositions('EUR/USD')
 				self.API.API_computeStats()
 			else:
-				self.API.API_postTrade('EUR/USD', 1000, 'buy')
-			#self.API.API_postTrade('EUR/USD', 500, 'buy')
-			#self.API.API_postTrade('EUR/USD', 600, 'sell')
-			#execfile('input.py')
-			#self.API.API_postTrade('EUR/USD', 1000, 'sell')
-			print self.API.cash
+				if self.API.API_movingAverage10("EUR/USD") < self.API.API_getRate("EUR/USD"):
+					self.API.API_postTrade('EUR/USD', 500, 'buy')
+				else:
+					self.API.API_postTrade('EUR/USD', 500, 'sell')
 
+				if self.API.API_movingAverage50("EUR/USD") > self.API.API_getRate("EUR/USD"):
+					self.API.API_postTrade('EUR/USD', 500, 'buy')
+				else:
+					self.API.API_postTrade('EUR/USD', 500, 'sell')
 			if i % 60 == 0:
 		#		self.API.API_postTrade('EUR/USD', 1, 'buy')
 				self.API.API_computeStats()
@@ -107,10 +109,10 @@ def main():
 	print "<title>Test CGI</title>"
 	print "<p>Hello World!</p>"
 	x = TimeLord()
-	x.getAlgorithm()
+	#x.getAlgorithm()
 
-	#x.initialize()
-	#x.mainLoop()
+	x.initialize()
+	x.mainLoop()
 
 if  __name__ =='__main__':main()
 

@@ -80,7 +80,7 @@ class API:
 			movingAverage = 0
 			for x in range((len(self.snapShots) - interval), len(self.snapShots)):
 				i = x
-				movingAverage = (movingAverage + self.snapShots[i].getRate(instrumentName))
+				movingAverage = (movingAverage + self.snapShots[i].getRate(instrumentName).getMid())
 			return float(movingAverage)/interval
 
 	def API_movingAverage10(self, instrumentName):
