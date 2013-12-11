@@ -16,7 +16,6 @@ class API:
 
 		self.snapShots.append(snapShot)
 
-
 		if len(self.snapShots) > 500:
 			self.snapShots.pop(0)
 
