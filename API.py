@@ -1,3 +1,6 @@
+import sys
+sys.dont_write_bytecode = True
+
 from fxObjects import Trade
 import json
 class API:
@@ -9,8 +12,12 @@ class API:
 		self.stats = []
 
 	def API_newSnapShot(self, snapShot):
+
 		self.snapShots.append(snapShot)
 		
+
+		if len(self.snapShots) > 500:
+			self.snapShots.pop(0)
 
 
 	def API_getRate(self, instrumentName):
@@ -83,3 +90,18 @@ class API:
 		with open('data.txt', 'w') as outfile:
   			json.dump(self.stats, outfile)
 
+  	def API_closeTrade(self, instrumentName):
+		if instrumentName in self.positions:
+			tradeObject = self.positions[instrumentName]
+			totalUnits = 0
+			side = ""
+			for i in tradeObject:
+				totalUnits += i.units
+				side = i.side
+
+			if side == "buy":
+				side = "sell"
+			elif side == "sell":
+				side = "buy"
+
+			self.API_postTrade(instrumentName, totalUnits, side);

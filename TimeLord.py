@@ -1,3 +1,6 @@
+import sys
+sys.dont_write_bytecode = True
+
 from fxObjects import Rate
 from fxObjects import MarketSnapshot
 import json
