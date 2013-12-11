@@ -15,7 +15,17 @@
 
 	<div class="user-input">
 		<div class="well">
-			<textarea id="code" name="code"></textarea>
+			<textarea id="code" name="code">
+if movingAverage10("EUR/USD") < getRate("EUR/USD"):
+	postTrade('EUR/USD', 500, 'buy')
+else:
+	postTrade('EUR/USD', 500, 'sell')
+
+if movingAverage50("EUR/USD") > getRate("EUR/USD"):
+	postTrade('EUR/USD', 500, 'buy')
+else:
+	postTrade('EUR/USD', 500, 'sell')
+			</textarea>
 		</div>
 		<table>
 			<tr>

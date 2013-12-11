@@ -41,18 +41,15 @@ class TimeLord(object):
 		#with open ("input.txt", "r") as inputFile:
 		#	algorithm = inputFile.read()
 
-		print "in getAlgorithm"
+		#print "in getAlgorithm"
 		form = cgi.FieldStorage()
-		algorithm = form["user-script"]
-
+		algorithm = form.getvalue("user-script");
 		print algorithm
-
 		algorithm = self.doRegex(algorithm)
-
 		print algorithm
 
-		#with open ("input.py", "w") as outputFile:
-		#	outputFile.write(algorithm)
+		with open ("input.py", "w") as outputFile:
+			outputFile.write(algorithm)
 			
 
 	def doRegex(self, algorithm):
@@ -109,8 +106,12 @@ def main():
 	print "<title>Test CGI</title>"
 	print "<p>Hello World!</p>"
 	x = TimeLord()
+<<<<<<< HEAD
 	#x.getAlgorithm()
 
+=======
+	x.getAlgorithm()
+>>>>>>> 9e3bbb548a20d6d899009e313f75c91ae9501c9d
 	x.initialize()
 	x.mainLoop()
 

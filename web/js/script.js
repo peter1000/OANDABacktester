@@ -1,5 +1,5 @@
 function graphData() {
-	$.getJSON('output.json', function (data) {
+	$.getJSON('/output.json', function (data) {
 		data = data.data;
 		//Format the data by turning the dateString into milliseconds
 		for (var i = 0; i < data.length; ++i) {
@@ -47,28 +47,8 @@ function graphData() {
 }
 
 function sendUserScript() {
-	var url = "/TimeLord.py";
 	$.get("/cgi-bin/TimeLord.py?user-script=" + encodeURIComponent(window.editor.getValue()), function (data) {
 		alert("Load was performed and got: " + data);
+		graphData();
 	});
-	return;
-	var params = "user-script=" + window.editor.getValue(); //get the user's input script text
-	var xhr = new XMLHttpRequest();
-	xhr.open("POST", url, true);
-
-	//Send the proper header information along with the request
-	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhr.setRequestHeader("Content-length", params.length);
-	xhr.setRequestHeader("Connection", "close");
-	xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-	xhr.setRequestHeader("Access-Control-Allow-Methods", "*");
-	xhr.setRequestHeader("Access-Control-Allow-Headers", "*");
-
-	xhr.onreadystatechange = function() { //Call a function when the state changes.
-		if (xhr.readyState == 4 && xhr.status == 200) {
-			//Once the back end script finishes, we expect output.json to exist, so call graphData()
-			graphData();
-		}
-	};
-	xhr.send(params);
 }
