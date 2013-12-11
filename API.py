@@ -14,6 +14,7 @@ class API:
 	def API_newSnapShot(self, snapShot):
 
 		self.snapShots.append(snapShot)
+		
 
 		if len(self.snapShots) > 500:
 			self.snapShots.pop(0)
@@ -61,13 +62,15 @@ class API:
 		return 1.00
 
 	def API_abstractMovingAverage(self, interval, instrumentName):
+		#print interval
 		if interval > len(self.snapShots):
-			self.API_abstractMovingAverage(len(self.snapShots), instrumentName)
+			movingAverage = self.API_abstractMovingAverage(len(self.snapShots), instrumentName)
+			return movingAverage
 		else:
 			movingAverage = 0
-			for x in range(interval, (len(self.snapShots) - interval)):
-				i = -1*x
-				movingAverage = movingAverage + self.snapShots[i].getRate(instrumentName).getAvg() 
+			for x in range((len(self.snapShots) - interval), len(self.snapShots)):
+				i = x
+				movingAverage = (movingAverage + self.snapShots[i].getRate(instrumentName).getMid())
 			return float(movingAverage)/interval
 
 	def API_movingAverage10(self, instrumentName):

@@ -57,12 +57,12 @@ class TimeLord(object):
 			#self.API.API_postTrade('EUR/USD', 500, 'buy')
 			#self.API.API_postTrade('EUR/USD', 600, 'sell')
 			execfile('input.py')
-			print self.API.pnl
+			#print self.API.pnl
 			self.API.API_computeStats()
+			i = i + 1
 
 		self.API.API_outputStats()
 			
-			i = i + 1
 			#print self.API.pnl
 			
 

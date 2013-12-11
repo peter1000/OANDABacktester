@@ -20,5 +20,5 @@ class Rate(object):
 	def getBid(self):
 		return self.bid
 
-	def getAvg(self):
+	def getMid(self):
 		return (self.bid + self.ask) / 2
