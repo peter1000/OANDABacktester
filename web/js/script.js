@@ -45,3 +45,23 @@ function graphData() {
 		});
 	});
 }
+
+function sendUserScript() {
+	var url = "whatever_they_have_in_the_backend.py";
+	var params = "user-script=" + document.getElementById('user-script').value; //get the user's input script text
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+
+	//Send the proper header information along with the request
+	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhr.setRequestHeader("Content-length", params.length);
+	xhr.setRequestHeader("Connection", "close");
+
+	http.onreadystatechange = function() { //Call a function when the state changes.
+		if (http.readyState == 4 && http.status == 200) {
+			//Once the back end script finishes, we expect output.json to exist, so call graphData()
+			graphData();
+		}
+	};
+	xhr.send(params);
+}
