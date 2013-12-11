@@ -49,6 +49,7 @@ class TimeLord(object):
 		#print length
 		for snap in self.snapShots:
 			self.API.API_newSnapShot(snap)
+
 			#print self.API.API_movingAverage10("EUR/USD")
 			#else:
 			if i == length-1:
@@ -61,7 +62,7 @@ class TimeLord(object):
 			#execfile('input.py')
 			#self.API.API_postTrade('EUR/USD', 1000, 'sell')
 			print self.API.cash
-			#print self.API.pnl
+
 			if i % 60 == 0:
 		#		self.API.API_postTrade('EUR/USD', 1, 'buy')
 				self.API.API_computeStats()
