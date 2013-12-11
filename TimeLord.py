@@ -1,3 +1,6 @@
+import sys
+sys.dont_write_bytecode = True
+
 from fxObjects import Rate
 from fxObjects import MarketSnapshot
 import json
@@ -41,8 +44,16 @@ class TimeLord(object):
 
 	def mainLoop(self):
 		print "Entering Main Loop"
+		i = 0
+		length = len(self.snapShots)
+		#print length
 		for snap in self.snapShots:
 			self.API.API_newSnapShot(snap)
+			print self.API.API_movingAverage10("EUR/USD")
+			self.API.API_postTrade('EUR/USD', 1, 'buy')
+			#else:
+			if i == length-1:
+				self.API.API_postTrade('EUR/USD', 5000, 'sell')
 			#self.API.API_postTrade('EUR/USD', 500, 'buy')
 			#self.API.API_postTrade('EUR/USD', 600, 'sell')
 			execfile('input.py')
@@ -50,6 +61,9 @@ class TimeLord(object):
 			self.API.API_computeStats()
 
 		self.API.API_outputStats()
+			
+			i = i + 1
+			#print self.API.pnl
 			
 
 	def initialize(self):
