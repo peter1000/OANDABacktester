@@ -9,12 +9,13 @@ class API:
 		self.snapShots = []
 		self.positions = {} # dictionary of a list of trades
 		self.pnl = 0
+		self.cash = 0
 		self.stats = []
 
 	def API_newSnapShot(self, snapShot):
 
 		self.snapShots.append(snapShot)
-		
+
 
 		if len(self.snapShots) > 500:
 			self.snapShots.pop(0)
@@ -29,36 +30,42 @@ class API:
 			return rate.getBid()
 		else:
 			return rate.getAsk()
-			
+
 	def API_postTrade(self, instrumentName, units, side):
-		if instrumentName in self.positions:
+		curRate = self.Rate(side, self.snapShots[-1].getRate(instrumentName))
+		if instrumentName in self.positions: #if there is a trade existing
 			curposition = self.positions[instrumentName]
-			if curposition[0].side != side:
+			if curposition[0].side != side: #if the side we are trading does not match the side of the trade that exists
 				diffUnits = curposition[0].units - units #Number of units in trade object subtract number of units selling/buying
 				if diffUnits > 0:
 					curposition[0].units = diffUnits
-					self.pnl += units * (curposition[0].price - self.Rate(side, self.snapShots[-1].getRate(instrumentName)))
+					self.pnl += units * (curposition[0].price - curRate)
+					self.cash += units*self.Rate(side, self.snapShots[-1].getRate(instrumentName))
 				elif diffUnits == 0:
-					self.pnl += units * (curposition[0].price - self.Rate(side, self.snapShots[-1].getRate(instrumentName)))
+					self.pnl += units * (curposition[0].price - curRate)
+					self.cash += units*self.Rate(side, self.snapShots[-1].getRate(instrumentName))
 					curposition.pop(0)
 					if len(curposition) == 0:
 						del self.positions[instrumentName]
 				else:
-					self.pnl += curposition[0].units * (curposition[0].price - self.Rate(side, self.snapShots[-1].getRate(instrumentName)))
+					self.pnl += curposition[0].units * (curposition[0].price - curRate)
+					self.cash += units * self.Rate(side, self.snapShots[-1].getRate(instrumentName))
 					curposition.pop(0)
 					if len(curposition) == 0:
 						del self.positions[instrumentName]
-					self.API_postTrade(instrumentName, diffUnits * -1, side) 
+					self.API_postTrade(instrumentName, diffUnits * -1, side)
 			else:
-				trade = Trade.Trade(0, units, side, instrumentName, self.Rate(side, self.snapShots[-1].getRate(instrumentName)))
-				curposition = trade				
+				trade = Trade.Trade(0, units, side, instrumentName, curRate)
+				curposition = trade
+				self.cash -= trade.units*trade.price
 				self.positions[instrumentName].append(trade)
-		else:
-			trade = Trade.Trade(0, units, side, instrumentName, self.Rate(side, self.snapShots[-1].getRate(instrumentName)))
+		else: #no trade exists
+			trade = Trade.Trade(0, units, side, instrumentName, curRate)
 			curposition = trade
 			self.positions[instrumentName] = []
+			self.cash -= trade.units*trade.price
 			self.positions[instrumentName].append(trade)
-			
+
 		return 1.00
 
 	def API_abstractMovingAverage(self, interval, instrumentName):
@@ -84,24 +91,28 @@ class API:
 
 	def API_computeStats(self):
 		#self.stats[self.snapShots[-1].getDate()]=self.pnl
-		self.stats.append([self.snapShots[-1].getDate(), self.pnl])
+		self.stats.append([self.snapShots[-1].getDate(), self.pnl, self.cash])
 
 	def API_outputStats(self):
 		with open('data.txt', 'w') as outfile:
   			json.dump(self.stats, outfile)
 
-  	def API_closeTrade(self, instrumentName):
+  	def API_closePositions(self, instrumentName):
+		print "closing positions"
 		if instrumentName in self.positions:
-			tradeObject = self.positions[instrumentName]
+			tradeObjects = self.positions[instrumentName]
 			totalUnits = 0
 			side = ""
-			for i in tradeObject:
-				totalUnits += i.units
-				side = i.side
+			i = len(tradeObjects)
+			while(i > 0):
+				i = i - 1
+				#totalUnits += trade.units
+				trade = tradeObjects[0]
+				side = trade.side
+				if side == "buy":
+					side = "sell"
+				elif side == "sell":
+					side = "buy"
+				self.API_postTrade(instrumentName, trade.units, side);
 
-			if side == "buy":
-				side = "sell"
-			elif side == "sell":
-				side = "buy"
-
-			self.API_postTrade(instrumentName, totalUnits, side);
+			print "wtf"

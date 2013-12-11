@@ -14,9 +14,9 @@ class TimeLord(object):
 		self.snapShots = []
 		self.API = API.API()
 
-	def readJSON(self):	
+	def readJSON(self):
 
-		print "Loading JSON" 
+		print "Loading JSON"
 		json_data = json.load(open('history/EUR_USD.json'))
 
 		instrumentName = "EUR/USD"
@@ -36,7 +36,7 @@ class TimeLord(object):
 #			print s.date
 #			print s.instruments
 
-		print "Json Loaded" 
+		print "Json Loaded"
 
 
 	def getRate(instrumentName):
@@ -49,22 +49,28 @@ class TimeLord(object):
 		#print length
 		for snap in self.snapShots:
 			self.API.API_newSnapShot(snap)
-			print self.API.API_movingAverage10("EUR/USD")
-			self.API.API_postTrade('EUR/USD', 1, 'buy')
+			#print self.API.API_movingAverage10("EUR/USD")
 			#else:
 			if i == length-1:
-				self.API.API_postTrade('EUR/USD', 5000, 'sell')
+				self.API.API_closePositions('EUR/USD')
+				self.API.API_computeStats()
+			else:
+				self.API.API_postTrade('EUR/USD', 1000, 'buy')
 			#self.API.API_postTrade('EUR/USD', 500, 'buy')
 			#self.API.API_postTrade('EUR/USD', 600, 'sell')
-			execfile('input.py')
+			#execfile('input.py')
+			#self.API.API_postTrade('EUR/USD', 1000, 'sell')
+			print self.API.cash
 			#print self.API.pnl
-			self.API.API_computeStats()
+			if i % 60 == 0:
+		#		self.API.API_postTrade('EUR/USD', 1, 'buy')
+				self.API.API_computeStats()
 			i = i + 1
 
 		self.API.API_outputStats()
-			
+
 			#print self.API.pnl
-			
+
 
 	def initialize(self):
 		self.readJSON()
@@ -74,6 +80,6 @@ def main():
 	 x = TimeLord()
 	 x.initialize()
 	 x.mainLoop()
-	
+
 if  __name__ =='__main__':main()
 
