@@ -47,14 +47,13 @@ function graphData() {
 }
 
 function sendUserScript() {
-	var url = "/TimeLord.py";
 	$.get("/cgi-bin/TimeLord.py?user-script=" + encodeURIComponent(window.editor.getValue()), function (data) {
 		alert("Load was performed and got: " + data);
 	});
 	return;
 	var params = "user-script=" + window.editor.getValue(); //get the user's input script text
 	var xhr = new XMLHttpRequest();
-	xhr.open("POST", url, true);
+	xhr.open("POST", "/cgi-bin/index.cgi", true);
 
 	//Send the proper header information along with the request
 	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -67,6 +66,7 @@ function sendUserScript() {
 	xhr.onreadystatechange = function() { //Call a function when the state changes.
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			//Once the back end script finishes, we expect output.json to exist, so call graphData()
+			alert(xhr.responseText);
 			graphData();
 		}
 	};
