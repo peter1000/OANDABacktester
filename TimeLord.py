@@ -47,6 +47,7 @@ class TimeLord(object):
 
 		form = cgi.FieldStorage()
 		algorithm = form["user-script"]
+		print algorithm
 
 		algorithm = self.doRegex(algorithm)
 
