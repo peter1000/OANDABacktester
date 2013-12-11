@@ -41,6 +41,7 @@ class TimeLord(object):
 		#with open ("input.txt", "r") as inputFile:
 		#	algorithm = inputFile.read()
 
+		print "in getAlgorithm"
 		form = cgi.FieldStorage()
 		algorithm = form["user-script"]
 
