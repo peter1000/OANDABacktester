@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>Backtester</title>
+		<link type="text/css" rel="stylesheet" href="style.css">
+	</head>
+
+<body>
+	<div class="title">
+		<p>Fxtrade Back Testing App</p>
+	</div>
+	<div>
+		<div class="user-input">
+			<a href="http://www.w3schools.com" target="_blank">
+				<button id="start">Start</button>
+			</a>
+		</div>
+		<div class="results">
+			<div class="profit">
+				Your profit rate:
+				<div id="rate">200%</div>
+				<!-- <div><img src=""/></div> for image for grow or loss-->
+			</div>
+			<div id="container"></div>
+		</div>
+	</div>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script src="js/highstock.js"></script>
+	<script src="js/highcharts-theme.js"></script>
+	<script src="js/exporting.js"></script>
+	<script src="js/script.js"></script>
+	<script>
+		graphData();
+	</script>
+</body>
+</html>
