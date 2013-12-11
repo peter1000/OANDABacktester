@@ -68,14 +68,11 @@ class API:
 
 	def API_computeStats(self):
 		#self.stats[self.snapShots[-1].getDate()]=self.pnl
-		self.stats.append([self.formatDate(self.snapShots[-1].getDate()), self.pnl])
+		self.stats.append([self.snapShots[-1].getDate(), self.pnl])
 
 	def API_outputStats(self):
 		with open('data.txt', 'w') as outfile:
   			json.dump(self.stats, outfile)
-
-  	def formatDate(self, date):
-  		return date
 
 
 
