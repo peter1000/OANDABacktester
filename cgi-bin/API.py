@@ -97,7 +97,7 @@ class API:
 		self.stats.append([self.snapShots[-1].getDate(), -1*self.pnl, self.cash, self.unrealized, self.unrealized-self.pnl])
 
 	def API_outputStats(self):
-		with open('data.txt', 'w') as outfile:
+		with open('../output.json', 'w') as outfile:
   			json.dump({"data":self.stats}, outfile)
 
   	def API_closePositions(self, instrumentName):

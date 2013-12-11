@@ -1,5 +1,5 @@
 function graphData() {
-	$.getJSON('output.json', function (data) {
+	$.getJSON('/output.json', function (data) {
 		data = data.data;
 		//Format the data by turning the dateString into milliseconds
 		for (var i = 0; i < data.length; ++i) {
