@@ -1,0 +1,54 @@
+body {
+	padding: 0 10px;
+}
+
+button {
+    font-size: 40px;
+}
+
+table {
+	width: 100%;
+}
+
+.ib {
+	display: inline-block !important;
+}
+
+.title {
+    color: green;
+    font-size: 40px;
+    margin-left: 10px;
+}
+
+.profit {
+    font-size: 30px;
+    margin-bottom: 30px;
+    margin-left: 10px;
+}
+
+.user-input, .results {
+	margin: 0 1%;
+}
+
+.user-input {
+	float:left;
+	width: 39%;
+}
+
+.user-input div.well {
+	padding-left: 0;
+}
+
+.user-input table td:first-child {
+	width: 100px;
+}
+
+.user-input td div.alert-success {
+	height: 45px;
+	margin-bottom: 0;
+}
+
+.results {
+	float:right;
+	width:57%;
+}

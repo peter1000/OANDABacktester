@@ -3,48 +3,75 @@
 	<head>
 		<meta charset="utf-8"/>
 		<title>Backtester</title>
-		<link type="text/css" rel="stylesheet" href="style.css">
+		<link type="text/css" rel="stylesheet" href="css/style.css">
 		<link type="text/css" rel="stylesheet" href="css/bootstrap.css">
+		<link type="text/css" rel="stylesheet" href="css/codemirror.css">
 	</head>
 
-<body class="container">
-    <div class="page-header">
-        <h1>Fxtrade Back Testing App</h1>
-    </div>
+<body class="">
+	<div class="page-header">
+		<h1>Fxtrade Back Testing App</h1>
+	</div>
 
+	<div class="user-input">
+		<div class="well">
+			<textarea id="code" name="code"></textarea>
+		</div>
+		<table>
+			<tr>
+				<td><a class="btn btn-primary btn-lg" onclick="sendUserScript();">Submit</a></td>
+				<td>
+					<div class="alert alert-success">
+						<a href="#" class="alert-link">Successfully submitted file!</a>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
 
-    <div class="alert alert-success">
-        <a href="#" class="alert-link">Successfully submitted file!</a>
-    </div>
+	<div class="results">
+		<div class="well">
+			<div id="graph"></div>
+		</div>
 
-    <div class="well well-lg">
-		<div id="graph"></div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">Summary Panel</div>
-          <div class="panel-body">
+		<div class="panel panel-default">
+			<div class="panel-heading">Summary Panel</div>
+			<div class="panel-body">
 				Your profit rate:
 				<div id="rate">200%</div>
-          </div> 
-    </div> 
+			</div>
+		</div>
 
-    <div class="progress">
-      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-        <span class="sr-only">40% Complete (success)</span>
-      </div>
-    </div>
-
-    <a class="btn btn-primary btn-lg" href="#">Submit</a>
+		<div class="progress">
+			<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+				<span class="sr-only">40% Complete (success)</span>
+			</div>
+		</div>
+	</div>
 
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script src="js/highstock.js"></script>
 	<script src="js/highcharts-theme.js"></script>
 	<script src="js/exporting.js"></script>
+	<script src="js/codemirror.js"></script>
+	<script src="js/python.js"></script>
+	<script src="js/matchbrackets.js"></script>
 	<script src="js/script.js"></script>
 	<script>
 		graphData();
+		window.editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+			mode: {
+				name: "python",
+				version: 2,
+				singleLineStringErrors: false
+			},
+			lineNumbers: true,
+			indentUnit: 4,
+			tabMode: "shift",
+			matchBrackets: true
+		});
 	</script>
+
 </body>
 </html>
